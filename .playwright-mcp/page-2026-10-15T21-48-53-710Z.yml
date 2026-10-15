@@ -1,0 +1,78 @@
+- generic [ref=f1e3]:
+  - banner [ref=f1e8]:
+    - button "Mostrar u ocultar la lista de proyectos" [ref=f1e9] [cursor=pointer]
+    - heading "ProGest" [level=1] [ref=f1e11]
+    - paragraph [ref=f1e12]: Tus proyectos, columna a columna.
+  - complementary "Proyectos" [ref=f1e13]:
+    - heading "Proyectos" [level=2] [ref=f1e14]
+    - generic [ref=f1e15]:
+      - generic [ref=f1e16]: Nombre del nuevo proyecto
+      - textbox "Nombre del nuevo proyecto" [ref=f1e17]:
+        - /placeholder: Nuevo proyecto
+      - button "Crear proyecto" [ref=f1e18] [cursor=pointer]
+    - list [ref=f1e109]:
+      - listitem [ref=f1e110]:
+        - button "Rediseño web" [ref=f1e111] [cursor=pointer]
+        - button "Eliminar el proyecto Rediseño web" [ref=f1e112] [cursor=pointer]
+  - main [ref=f1e27]:
+    - generic [ref=f1e116]:
+      - generic [ref=f1e117]:
+        - heading "Rediseño web" [level=2] [ref=f1e118]
+        - paragraph [ref=f1e119]:
+          - generic [ref=f1e120]: 0 de 1 tareas completadas
+          - generic [ref=f1e121]: Sin estimar estimadas
+      - generic [ref=f1e125]:
+        - region "Columna Por hacer" [ref=f1e126]:
+          - generic [ref=f1e127]:
+            - heading "Por hacer 1" [level=3] [ref=f1e224]:
+              - text: Por hacer
+              - generic [ref=f1e129]: "1"
+            - generic [ref=f1e130]:
+              - button "Renombrar la columna Por hacer" [ref=f1e131] [cursor=pointer]
+              - button "Eliminar la columna Por hacer" [ref=f1e135] [cursor=pointer]
+          - paragraph [ref=f1e139]: Sin estimar
+          - list [ref=f1e143]:
+            - listitem [ref=f1e225]:
+              - generic [ref=f1e226]:
+                - generic [ref=f1e227]: Pendiente
+                - generic [ref=f1e228]:
+                  - button "Editar la tarea Diseñar portada" [ref=f1e229] [cursor=pointer]
+                  - button "Eliminar la tarea Diseñar portada" [ref=f1e233] [cursor=pointer]
+              - heading "Diseñar portada" [level=4] [ref=f1e237]
+              - generic [ref=f1e238]:
+                - generic [ref=f1e239]: Sin estimar
+                - generic [ref=f1e243]:
+                  - generic [ref=f1e244]: Mover la tarea Diseñar portada a otra columna
+                  - combobox "Mover la tarea Diseñar portada a otra columna" [ref=f1e245]:
+                    - option "Por hacer" [selected]
+                    - option "En curso"
+                    - option "Hecho"
+          - button "Añadir tarea" [ref=f1e144] [cursor=pointer]
+        - region "Columna En curso" [ref=f1e146]:
+          - generic [ref=f1e147]:
+            - heading "En curso 0" [level=3] [ref=f1e148]:
+              - text: En curso
+              - generic [ref=f1e149]: "0"
+            - generic [ref=f1e150]:
+              - button "Renombrar la columna En curso" [ref=f1e151] [cursor=pointer]
+              - button "Eliminar la columna En curso" [ref=f1e155] [cursor=pointer]
+          - paragraph [ref=f1e159]: Sin estimar
+          - list [ref=f1e163]
+          - button "Añadir tarea" [ref=f1e164] [cursor=pointer]
+        - region "Columna Hecho" [ref=f1e166]:
+          - generic [ref=f1e167]:
+            - heading "Hecho 0" [level=3] [ref=f1e168]:
+              - text: Hecho
+              - generic [ref=f1e169]: "0"
+            - generic [ref=f1e170]:
+              - button "Renombrar la columna Hecho" [ref=f1e171] [cursor=pointer]
+              - button "Eliminar la columna Hecho" [ref=f1e175] [cursor=pointer]
+          - paragraph [ref=f1e179]: Sin estimar
+          - list [ref=f1e183]
+          - button "Añadir tarea" [ref=f1e184] [cursor=pointer]
+        - generic [ref=f1e186]:
+          - generic [ref=f1e187]: Nueva columna
+          - textbox "Nueva columna" [ref=f1e188]:
+            - /placeholder: "Por ejemplo: Bloqueadas"
+          - button "Crear columna" [ref=f1e189] [cursor=pointer]
+  - paragraph [ref=f1e246]: Tarea creada.

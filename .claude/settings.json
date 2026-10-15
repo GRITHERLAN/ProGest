@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_drag",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "Bash(sed -i 's/@media \\(max-width: 80em\\)/@media \\(max-width: 56em\\)/; s/@media \\(max-width: 40em\\)/@media \\(max-width: 36em\\)/' responsive.css)",
+      "Bash(sed -i 's#^/\\\\* Tablets y móviles: la barra#/* OJO: en media queries 1em = 16px \\(no usa el 62.5% del html\\), así 56em = 896px.\\\\n   Tablets y móviles: la barra#' responsive.css)",
+      "Bash(sed -i 's/^\\\\.topbar__toggle {/.topbar .topbar__toggle {/; ' layout.css)",
+      "Bash(sed -i 's/^  \\\\.topbar__toggle {/  .topbar .topbar__toggle {/' responsive.css)"
+    ]
+  }
+}

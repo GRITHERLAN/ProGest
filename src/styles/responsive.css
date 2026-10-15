@@ -1,0 +1,151 @@
+/* ==========================================================================
+   Adaptación a pantallas pequeñas (enfoque de escritorio a móvil)
+
+   OJO: en media queries 1em = 16px (no usa el 62.5% del html), así que
+   56em = 896px y 36em = 576px.
+   ========================================================================== */
+
+/* ---- Tablets y móviles (hasta 896px) ----
+   - La página pasa a desplazarse en vertical (un único scroll natural).
+   - La barra lateral se convierte en un panel desplegable.
+   - Las columnas se apilan en una rejilla: 2 por fila en tablet, 1 en móvil. */
+@media (max-width: 56em) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-content: start; /* evita que la cabecera se estire al sobrar alto */
+    grid-template-areas:
+      'topbar'
+      'main';
+    height: auto;
+    min-height: 100dvh;
+    padding: var(--space-3);
+    overflow: visible;
+  }
+
+  /* Cabecera fija arriba para tener siempre a mano el botón del menú. */
+  .topbar {
+    position: sticky;
+    top: var(--space-3);
+    z-index: 60;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    /* RENDIMIENTO: casi opaca y sin desenfoque; una cabecera fija con blur obliga a
+       recalcular el cristal en cada fotograma del scroll. */
+    background: rgba(18, 23, 60, 0.94);
+    border: 0.1rem solid var(--glass-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .topbar .topbar__toggle {
+    display: inline-grid;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 8rem;
+    left: var(--space-3);
+    right: var(--space-3);
+    z-index: 50;
+    max-height: calc(100dvh - 9.5rem);
+    display: none;
+    /* Más opaco para que se lea bien por encima del tablero. */
+    background: rgba(24, 30, 70, 0.85);
+  }
+
+  .sidebar.is-open {
+    display: flex;
+  }
+
+  .main {
+    min-height: auto;
+  }
+
+  .board {
+    height: auto;
+  }
+
+  .board__title {
+    font-size: var(--text-xl);
+  }
+
+  /* Rejilla de columnas: tantas como quepan con un mínimo de 28rem cada una. */
+  .board__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+    align-items: start;
+    overflow: visible;
+    padding-bottom: var(--space-5);
+  }
+
+  .column {
+    min-width: 0;
+    max-height: none;
+  }
+
+  /* Ya no hay scroll interno: las tareas se ven todas y la página se desplaza. */
+  .column__tasks {
+    overflow: visible;
+  }
+
+  /* En móvil el formulario va debajo de las columnas, a todo el ancho. */
+  .board__body {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Sin scroll lateral: el panel deja de ser una card y las columnas se ven en rejilla. */
+  .board__columns {
+    background: none;
+    border: none;
+    padding: 0;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .new-column {
+    flex: none;
+  }
+}
+
+/* ---- Móviles estrechos (hasta 576px) ---- */
+@media (max-width: 36em) {
+  .topbar__tagline {
+    display: none;
+  }
+
+  .board__title {
+    font-size: 3.2rem;
+  }
+
+  /* Una sola columna a todo el ancho. */
+  .board__columns {
+    grid-template-columns: 1fr;
+  }
+
+  .column {
+    padding: var(--space-3);
+  }
+
+  .modal {
+    padding: var(--space-4);
+  }
+
+  .modal__actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal__actions .button {
+    width: 100%;
+  }
+
+  .field__row {
+    flex-wrap: wrap;
+  }
+
+  .toast-stack {
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: var(--space-3);
+  }
+}

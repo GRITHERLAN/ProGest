@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Reset y estilos base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 62.5% de 16px = 10px: así 1rem equivale a 10px y los cálculos son sencillos. */
+html {
+  font-size: 62.5%;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  color: var(--color-ink);
+  background-color: var(--color-night);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Barras de desplazamiento discretas, a juego con el tema oscuro. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* Foco visible para quien navega con teclado. */
+:focus-visible {
+  outline: 0.3rem solid var(--color-sky);
+  outline-offset: 0.2rem;
+}
+
+/* Oculta un elemento visualmente pero lo mantiene disponible para lectores de pantalla. */
+.visually-hidden {
+  position: absolute;
+  width: 0.1rem;
+  height: 0.1rem;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Respeta a quien prefiere menos movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

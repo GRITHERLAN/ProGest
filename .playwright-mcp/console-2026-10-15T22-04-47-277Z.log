@@ -1,0 +1,4 @@
+[      74ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-373CG7ZK.js?v=954bb27d:21548
+[   16488ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-373CG7ZK.js?v=954bb27d:21548
+[  118206ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5173/src/components/Board.jsx?t=1792102005448:0
+[  118208ms] [ERROR] [hmr] Failed to reload /src/components/Board.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:5173/@vite/client:175

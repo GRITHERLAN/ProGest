@@ -1,0 +1,63 @@
+- generic [ref=f1e3]:
+  - banner [ref=f1e8]:
+    - button "Mostrar u ocultar la lista de proyectos" [ref=f1e9] [cursor=pointer]
+    - heading "ProGest" [level=1] [ref=f1e11]
+    - paragraph [ref=f1e12]: Tus proyectos, columna a columna.
+  - complementary "Proyectos" [ref=f1e13]:
+    - heading "Proyectos" [level=2] [ref=f1e14]
+    - generic [ref=f1e15]:
+      - generic [ref=f1e16]: Nombre del nuevo proyecto
+      - textbox "Nombre del nuevo proyecto" [active] [ref=f1e17]:
+        - /placeholder: Nuevo proyecto
+      - button "Crear proyecto" [ref=f1e18] [cursor=pointer]
+    - list [ref=f1e20]:
+      - listitem [ref=f1e21]:
+        - button "Rediseño web" [ref=f1e22] [cursor=pointer]
+        - button "Eliminar el proyecto Rediseño web" [ref=f1e23] [cursor=pointer]
+  - main [ref=f1e27]:
+    - generic [ref=f1e28]:
+      - generic [ref=f1e29]:
+        - heading "Rediseño web" [level=2] [ref=f1e30]
+        - paragraph [ref=f1e31]:
+          - generic [ref=f1e32]: 0 de 0 tareas completadas
+          - generic [ref=f1e33]: Sin estimar estimadas
+      - generic [ref=f1e37]:
+        - region "Columna Por hacer" [ref=f1e38]:
+          - generic [ref=f1e39]:
+            - heading "Por hacer 0" [level=3] [ref=f1e40]:
+              - text: Por hacer
+              - generic [ref=f1e41]: "0"
+            - generic [ref=f1e42]:
+              - button "Renombrar la columna Por hacer" [ref=f1e43] [cursor=pointer]
+              - button "Eliminar la columna Por hacer" [ref=f1e47] [cursor=pointer]
+          - paragraph [ref=f1e51]: Sin estimar
+          - list [ref=f1e55]
+          - button "Añadir tarea" [ref=f1e56] [cursor=pointer]
+        - region "Columna En curso" [ref=f1e58]:
+          - generic [ref=f1e59]:
+            - heading "En curso 0" [level=3] [ref=f1e60]:
+              - text: En curso
+              - generic [ref=f1e61]: "0"
+            - generic [ref=f1e62]:
+              - button "Renombrar la columna En curso" [ref=f1e63] [cursor=pointer]
+              - button "Eliminar la columna En curso" [ref=f1e67] [cursor=pointer]
+          - paragraph [ref=f1e71]: Sin estimar
+          - list [ref=f1e75]
+          - button "Añadir tarea" [ref=f1e76] [cursor=pointer]
+        - region "Columna Hecho" [ref=f1e78]:
+          - generic [ref=f1e79]:
+            - heading "Hecho 0" [level=3] [ref=f1e80]:
+              - text: Hecho
+              - generic [ref=f1e81]: "0"
+            - generic [ref=f1e82]:
+              - button "Renombrar la columna Hecho" [ref=f1e83] [cursor=pointer]
+              - button "Eliminar la columna Hecho" [ref=f1e87] [cursor=pointer]
+          - paragraph [ref=f1e91]: Sin estimar
+          - list [ref=f1e95]
+          - button "Añadir tarea" [ref=f1e96] [cursor=pointer]
+        - generic [ref=f1e98]:
+          - generic [ref=f1e99]: Nueva columna
+          - textbox "Nueva columna" [ref=f1e100]:
+            - /placeholder: "Por ejemplo: Bloqueadas"
+          - button "Crear columna" [ref=f1e101] [cursor=pointer]
+  - paragraph [ref=f1e104]: Proyecto «Rediseño web» creado.

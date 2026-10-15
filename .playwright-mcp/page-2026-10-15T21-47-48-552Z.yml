@@ -1,0 +1,9 @@
+- generic [ref=e3]:
+  - banner [ref=e8]:
+    - button "Mostrar u ocultar la lista de proyectos" [ref=e9] [cursor=pointer]
+    - heading "ProGest" [level=1] [ref=e11]
+    - paragraph [ref=e12]: Tus proyectos, columna a columna.
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - heading "Empieza creando un proyecto" [level=2] [ref=e15]
+      - paragraph [ref=e16]: Cada proyecto tiene su propio tablero con columnas y tareas. Escribe un nombre en la lista de proyectos para crear el primero.

@@ -1,0 +1,418 @@
+/* ==========================================================================
+   Componentes reutilizables: cristal, botones, formularios, tarjetas, modal
+   ========================================================================== */
+
+/* ---- Glassmorphism ---- */
+.glass {
+  background: var(--glass-bg);
+  border: 0.1rem solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.glass-soft {
+  background: var(--glass-bg-soft);
+  border: 0.1rem solid var(--glass-border);
+  border-radius: var(--radius-md);
+  -webkit-backdrop-filter: blur(1.2rem);
+  backdrop-filter: blur(1.2rem);
+}
+
+/* RENDIMIENTO: columnas y tarjetas viven DENTRO del panel que ya tiene desenfoque.
+   Anidar varios backdrop-filter (y sombras enormes) hace que el scroll vaya a tirones,
+   así que aquí se sustituyen por un fondo translúcido algo más marcado. */
+.column.glass {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0.8rem 2.4rem rgba(3, 5, 20, 0.25);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.task.glass-soft {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  flex-shrink: 0;
+}
+
+/* ---- Botones ---- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 0.1rem solid transparent;
+  transition: transform var(--transition), background var(--transition), border-color var(--transition);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button--primary {
+  background: linear-gradient(135deg, var(--color-indigo), #a05bff);
+  box-shadow: 0 0.8rem 2rem rgba(116, 104, 255, 0.4);
+}
+
+.button--primary:hover {
+  background: linear-gradient(135deg, #8a80ff, #b374ff);
+}
+
+.button--ghost {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+.button--ghost:hover {
+  background: var(--glass-bg-hover);
+}
+
+.button--danger {
+  background: var(--color-coral);
+  color: #2a0612;
+}
+
+.button--danger:hover {
+  background: #ff86a3;
+}
+
+.button--square {
+  flex-shrink: 0;
+  width: 4.4rem;
+  padding: 0;
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-ink-soft);
+  transition: background var(--transition), color var(--transition);
+}
+
+.icon-button:hover {
+  background: var(--glass-bg-hover);
+  color: var(--color-ink);
+}
+
+.icon-button--danger:hover {
+  color: var(--color-coral);
+}
+
+/* ---- Formularios ---- */
+input[type='text'],
+input[type='number'],
+textarea,
+select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(8, 11, 36, 0.45);
+  border: 0.1rem solid var(--glass-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-ink-soft);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--color-sky);
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Las opciones del desplegable se pintan oscuras para que el texto claro se lea. */
+select option {
+  background: #141a3d;
+  color: var(--color-ink);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.field label,
+.field legend {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink-soft);
+}
+
+.field--group {
+  border: none;
+}
+
+.field__row {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.field__row--split > .field {
+  flex: 1;
+}
+
+.field__inline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-ink-soft);
+}
+
+.field__error {
+  color: var(--color-coral);
+  font-size: var(--text-sm);
+}
+
+input[aria-invalid='true'] {
+  border-color: var(--color-coral);
+}
+
+/* ---- Columna ---- */
+.column__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.column__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-md);
+  overflow-wrap: anywhere;
+}
+
+.column__count {
+  min-width: 2.4rem;
+  padding: 0 var(--space-2);
+  font-size: var(--text-xs);
+  text-align: center;
+  line-height: 2.4rem;
+  background: var(--glass-bg-hover);
+  border-radius: 99rem;
+}
+
+.column__rename {
+  flex: 1;
+}
+
+.column__actions {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.column__total {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+}
+
+.column__add {
+  justify-content: flex-start;
+  border-style: dashed;
+}
+
+/* ---- Tarjeta de tarea ---- */
+.task {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  cursor: grab;
+  transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.task:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-0.2rem);
+}
+
+.task:active {
+  cursor: grabbing;
+}
+
+.task.is-dragging {
+  opacity: 0.4;
+}
+
+.task__top,
+.task__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.task__actions {
+  display: flex;
+}
+
+.task__title {
+  font-size: var(--text-md);
+  overflow-wrap: anywhere;
+}
+
+.task__description {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.task__time {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+.task__move select {
+  width: auto;
+  max-width: 12rem;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+}
+
+/* ---- Insignias de estado: el color identifica el estado de un vistazo ---- */
+.badge {
+  padding: 0.2rem var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  border-radius: 99rem;
+  border: 0.1rem solid currentColor;
+}
+
+.badge--pending {
+  color: var(--color-ink-soft);
+}
+
+.badge--progress {
+  color: var(--color-sky);
+}
+
+.badge--review {
+  color: var(--color-amber);
+}
+
+.badge--done {
+  color: var(--color-mint);
+}
+
+/* ---- Indicadores de arrastre ---- */
+.column.is-drop-column {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 0 0 0.2rem var(--color-mint), var(--glass-shadow);
+}
+
+/* Línea mint justo encima de la tarjeta sobre la que se va a soltar. */
+.task.is-drop-target {
+  box-shadow: 0 -0.4rem 0 -0.1rem var(--color-mint);
+}
+
+/* Línea mint al final de la lista cuando se soltará en último lugar. */
+.column__tasks.is-drop-end::after {
+  content: '';
+  height: 0.3rem;
+  border-radius: 99rem;
+  background: var(--color-mint);
+}
+
+/* ---- Modal ---- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgba(4, 6, 22, 0.6);
+  -webkit-backdrop-filter: blur(0.6rem);
+  backdrop-filter: blur(0.6rem);
+}
+
+.modal {
+  width: 100%;
+  max-width: 52rem;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: var(--space-5);
+  /* Más opaco que el resto del cristal para que el contenido se lea bien. */
+  background: rgba(24, 30, 70, 0.72);
+  animation: modal-in 0.18s ease-out;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.2rem) scale(0.98);
+  }
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.modal__title {
+  font-size: var(--text-lg);
+}
+
+.modal__text {
+  color: var(--color-ink-soft);
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.form .modal__actions {
+  margin-top: var(--space-2);
+}
+
+/* ---- Avisos ---- */
+.toast {
+  padding: var(--space-3) var(--space-5);
+  border-left: 0.4rem solid var(--color-mint);
+  background: rgba(24, 30, 70, 0.8);
+  animation: modal-in 0.2s ease-out;
+}
+
+.toast--error {
+  border-left-color: var(--color-coral);
+}
