@@ -210,6 +210,11 @@
      La barra es fina y visible para que se note que hay más columnas. */
   overflow-x: auto;
   scrollbar-width: thin;
+  /* RENDIMIENTO: este panel se desplaza, y un desenfoque encima obliga a Chrome a
+     repintarlo en cada fotograma. Se usa un fondo translúcido sin desenfoque. */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* Formulario de nueva columna: queda fuera del scroll, fijo en el lateral derecho. */

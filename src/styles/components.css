@@ -36,6 +36,15 @@
   backdrop-filter: none;
 }
 
+/* El panel de columnas se desplaza en horizontal: sin desenfoque (ver layout.css).
+   Se usa un selector con dos clases porque .glass-soft (arriba) se carga después que layout.css
+   y, con la misma especificidad, ganaría su desenfoque. */
+.board__columns.glass-soft {
+  background: rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 .icon {
   width: 1.8rem;
   height: 1.8rem;
@@ -139,10 +148,95 @@ textarea {
   resize: vertical;
 }
 
-/* Las opciones del desplegable se pintan oscuras para que el texto claro se lea. */
+/* Las opciones del desplegable nativo se pintan oscuras para que el texto claro se lea.
+   Se mantiene por si algún <select> nativo queda en la web (por ejemplo, en las tarjetas). */
 select option {
   background: #141a3d;
   color: var(--color-ink);
+}
+
+/* ---- Desplegable propio (componente Select.jsx) ---- */
+/* Contenedor de referencia: la lista se posiciona justo debajo del botón. */
+.select {
+  position: relative;
+  width: 100%;
+}
+
+/* El botón imita a los campos de texto: mismo fondo, borde y relleno. */
+.select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  background: rgba(8, 11, 36, 0.45);
+  border: 0.1rem solid var(--glass-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition);
+}
+
+.select__trigger:focus-visible,
+.select__trigger[aria-expanded='true'] {
+  border-color: var(--color-sky);
+}
+
+.select__trigger > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* La flecha gira cuando la lista está abierta. */
+.select__trigger .icon {
+  transition: transform var(--transition);
+}
+
+.select__trigger[aria-expanded='true'] .icon {
+  transform: rotate(180deg);
+}
+
+/* La lista se dibuja en <body>, fuera de la ventana modal, y se posiciona con "top"/"bottom",
+   "left" y "width" desde Select.jsx. Va por encima de la ventana (z-index 100). */
+.select__menu {
+  position: fixed;
+  z-index: 110;
+  margin: 0;
+  list-style: none;
+  padding: var(--space-1);
+  background: rgba(20, 26, 61, 0.97);
+  border: 0.1rem solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--glass-shadow);
+  animation: select-in 0.12s ease-out;
+}
+
+.select__option {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  border-radius: var(--radius-sm);
+  transition: background 0.12s ease;
+}
+
+.select__option:hover,
+.select__option:focus-visible {
+  background: var(--glass-bg-hover);
+}
+
+/* La opción elegida se marca en color para verla de un vistazo. */
+.select__option[aria-selected='true'] {
+  color: var(--color-sky);
+  font-weight: 700;
+}
+
+@keyframes select-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.4rem);
+  }
 }
 
 .form {
@@ -349,6 +443,10 @@ input[aria-invalid='true'] {
 }
 
 /* ---- Modal ---- */
+/* RENDIMIENTO: el fondo oscuro NO usa desenfoque. Un backdrop-filter sobre toda la pantalla
+   (y otro dentro de la ventana) obliga al navegador a recalcular el cristal en cada fotograma
+   de la animación de entrada, y por eso la ventana tardaba en abrirse. Se usa solo un
+   oscurecido translúcido, que es casi gratis de pintar. */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -356,9 +454,7 @@ input[aria-invalid='true'] {
   display: grid;
   place-items: center;
   padding: var(--space-4);
-  background: rgba(4, 6, 22, 0.6);
-  -webkit-backdrop-filter: blur(0.6rem);
-  backdrop-filter: blur(0.6rem);
+  background: rgba(4, 6, 22, 0.62);
 }
 
 .modal {
@@ -367,15 +463,19 @@ input[aria-invalid='true'] {
   max-height: 100%;
   overflow-y: auto;
   padding: var(--space-5);
-  /* Más opaco que el resto del cristal para que el contenido se lea bien. */
-  background: rgba(24, 30, 70, 0.72);
-  animation: modal-in 0.18s ease-out;
+  /* Más opaco que el resto del cristal para que el contenido se lea bien.
+     Sin backdrop-filter (lo anula la clase .glass por defecto): ver nota de arriba. */
+  background: rgba(24, 30, 70, 0.9);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  /* Entrada rápida: solo se anima opacidad y transform, que la GPU gestiona sin repintar. */
+  animation: modal-in 0.14s ease-out;
 }
 
 @keyframes modal-in {
   from {
     opacity: 0;
-    transform: translateY(1.2rem) scale(0.98);
+    transform: translateY(0.8rem);
   }
 }
 
@@ -409,7 +509,10 @@ input[aria-invalid='true'] {
 .toast {
   padding: var(--space-3) var(--space-5);
   border-left: 0.4rem solid var(--color-mint);
-  background: rgba(24, 30, 70, 0.8);
+  /* Fondo ya opaco: el aviso no necesita desenfoque (es un elemento fijo y temporal). */
+  background: rgba(24, 30, 70, 0.9);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   animation: modal-in 0.2s ease-out;
 }
 

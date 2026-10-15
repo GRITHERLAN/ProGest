@@ -2,6 +2,7 @@
 // Si recibe "task" estamos editando; si no, creando.
 import { useId, useState } from 'react';
 import Modal from './Modal';
+import Select from './Select';
 import { TASK_STATUSES } from '../utils/constants';
 
 export default function TaskForm({ task, columns, initialColumnId, onSave, onClose }) {
@@ -101,24 +102,23 @@ export default function TaskForm({ task, columns, initialColumnId, onSave, onClo
         <div className="field__row field__row--split">
           <div className="field">
             <label htmlFor={`${formId}-status`}>Estado</label>
-            <select id={`${formId}-status`} value={status} onChange={(event) => setStatus(event.target.value)}>
-              {TASK_STATUSES.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
+            {/* Desplegable propio (ver Select.jsx): su lista se anima igual que el resto de la web. */}
+            <Select
+              id={`${formId}-status`}
+              value={status}
+              options={TASK_STATUSES.map((item) => ({ id: item.id, label: item.label }))}
+              onChange={setStatus}
+            />
           </div>
 
           <div className="field">
             <label htmlFor={`${formId}-column`}>Columna</label>
-            <select id={`${formId}-column`} value={columnId} onChange={(event) => setColumnId(event.target.value)}>
-              {columns.map((column) => (
-                <option key={column.id} value={column.id}>
-                  {column.name}
-                </option>
-              ))}
-            </select>
+            <Select
+              id={`${formId}-column`}
+              value={columnId}
+              options={columns.map((column) => ({ id: column.id, label: column.name }))}
+              onChange={setColumnId}
+            />
           </div>
         </div>
 

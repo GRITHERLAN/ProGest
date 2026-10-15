@@ -1,10 +1,12 @@
 // Una columna del tablero: cabecera editable, lista de tareas y zona de soltado (drop).
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import Icon from './Icon';
 import TaskCard from './TaskCard';
 import { formatMinutes } from '../utils/formatTime';
 
-export default function Column({
+// Se usa memo: si el tablero se vuelve a pintar (por ejemplo al abrir el modal) y esta columna
+// no cambia, React se la salta. Por eso Board pasa callbacks estables.
+function Column({
   column,
   columns,
   drag,
@@ -28,7 +30,7 @@ export default function Column({
   function handleRenameSubmit(event) {
     event.preventDefault();
     // Si el nombre queda vacío, se conserva el anterior.
-    if (draftName.trim()) onRename(draftName.trim());
+    if (draftName.trim()) onRename(column.id, draftName.trim());
     else setDraftName(column.name);
     setIsRenaming(false);
   }
@@ -82,7 +84,7 @@ export default function Column({
           <button
             type="button"
             className="icon-button icon-button--danger"
-            onClick={onDeleteColumn}
+            onClick={() => onDeleteColumn(column)}
             aria-label={`Eliminar la columna ${column.name}`}
           >
             <Icon name="trash" />
@@ -107,17 +109,19 @@ export default function Column({
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
             onDragOverTask={onDragOverTarget}
-            onEdit={() => onEditTask(task)}
+            onEdit={() => onEditTask(column.id, task)}
             onDelete={() => onDeleteTask(task)}
             onMoveTo={(toColumnId) => onMoveTask(task.id, toColumnId)}
           />
         ))}
       </ul>
 
-      <button type="button" className="button button--ghost column__add" onClick={onAddTask}>
+      <button type="button" className="button button--ghost column__add" onClick={() => onAddTask(column.id)}>
         <Icon name="plus" />
         Añadir tarea
       </button>
     </section>
   );
 }
+
+export default memo(Column);

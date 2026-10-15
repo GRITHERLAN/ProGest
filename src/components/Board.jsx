@@ -1,5 +1,5 @@
 // Tablero del proyecto activo: columnas, formulario de nueva columna y diálogos.
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useProGest } from '../context/ProGestContext';
 import Column from './Column';
 import TaskForm from './TaskForm';
@@ -65,9 +65,14 @@ export default function Board({ project }) {
     setDialog(null);
   }
 
-  function handleMoveTask(taskId, toColumnId, beforeTaskId = null) {
-    dispatch({ type: 'MOVE_TASK', projectId: project.id, taskId, toColumnId, beforeTaskId });
-  }
+  // Los manejadores que se pasan a las columnas usan useCallback: así su referencia no cambia
+  // en cada render y las columnas memorizadas (React.memo) no se vuelven a pintar sin motivo.
+  const handleMoveTask = useCallback(
+    (taskId, toColumnId, beforeTaskId = null) => {
+      dispatch({ type: 'MOVE_TASK', projectId: project.id, taskId, toColumnId, beforeTaskId });
+    },
+    [dispatch, project.id],
+  );
 
   function handleConfirmDelete() {
     if (dialog.kind === 'task') {
@@ -80,13 +85,34 @@ export default function Board({ project }) {
     setDialog(null);
   }
 
+  // ---------- Callbacks estables para las columnas ----------
+  // Cada columna recibe su id como argumento en lugar de un callback nuevo por columna.
+  const handleRenameColumn = useCallback(
+    (columnId, name) => dispatch({ type: 'RENAME_COLUMN', projectId: project.id, columnId, name }),
+    [dispatch, project.id],
+  );
+  const handleRequestDeleteColumn = useCallback((column) => setDialog({ kind: 'column', column }), []);
+  const handleRequestAddTask = useCallback((columnId) => setDialog({ kind: 'form', columnId }), []);
+  const handleRequestEditTask = useCallback(
+    (columnId, task) => setDialog({ kind: 'form', columnId, task }),
+    [],
+  );
+  const handleRequestDeleteTask = useCallback((task) => setDialog({ kind: 'task', task }), []);
+
   // ---------- Drag and drop ----------
-  function handleDrop() {
+  const handleDragStart = useCallback((taskId) => setDrag({ ...NO_DRAG, taskId }), []);
+  const handleDragEnd = useCallback(() => setDrag(NO_DRAG), []);
+  const handleDragOverTarget = useCallback(
+    (overColumnId, overTaskId) => setDrag((current) => ({ ...current, overColumnId, overTaskId })),
+    [],
+  );
+
+  const handleDrop = useCallback(() => {
     if (drag.taskId && drag.overColumnId) {
       handleMoveTask(drag.taskId, drag.overColumnId, drag.overTaskId);
     }
     setDrag(NO_DRAG);
-  }
+  }, [drag, handleMoveTask]);
 
   return (
     <div className="board">
@@ -112,19 +138,15 @@ export default function Board({ project }) {
               column={column}
               columns={project.columns}
               drag={drag}
-              onRename={(name) =>
-                dispatch({ type: 'RENAME_COLUMN', projectId: project.id, columnId: column.id, name })
-              }
-              onDeleteColumn={() => setDialog({ kind: 'column', column })}
-              onAddTask={() => setDialog({ kind: 'form', columnId: column.id })}
-              onEditTask={(task) => setDialog({ kind: 'form', columnId: column.id, task })}
-              onDeleteTask={(task) => setDialog({ kind: 'task', task })}
+              onRename={handleRenameColumn}
+              onDeleteColumn={handleRequestDeleteColumn}
+              onAddTask={handleRequestAddTask}
+              onEditTask={handleRequestEditTask}
+              onDeleteTask={handleRequestDeleteTask}
               onMoveTask={handleMoveTask}
-              onDragStart={(taskId) => setDrag({ ...NO_DRAG, taskId })}
-              onDragEnd={() => setDrag(NO_DRAG)}
-              onDragOverTarget={(overColumnId, overTaskId) =>
-                setDrag((current) => ({ ...current, overColumnId, overTaskId }))
-              }
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              onDragOverTarget={handleDragOverTarget}
               onDrop={handleDrop}
             />
           ))}

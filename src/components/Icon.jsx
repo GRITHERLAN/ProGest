@@ -10,6 +10,7 @@ const PATHS = {
   close: ['M6 6l12 12', 'M18 6L6 18'],
   menu: ['M4 7h16', 'M4 12h16', 'M4 17h16'],
   grip: ['M9 6h.01', 'M15 6h.01', 'M9 12h.01', 'M15 12h.01', 'M9 18h.01', 'M15 18h.01'],
+  chevron: ['M6 9l6 6 6-6'],
 };
 
 export default function Icon({ name }) {

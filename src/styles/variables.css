@@ -20,7 +20,8 @@
   --glass-bg-soft: rgba(255, 255, 255, 0.07);
   --glass-bg-hover: rgba(255, 255, 255, 0.14);
   --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-blur: blur(2rem) saturate(160%);
+  /* Desenfoque más suave: el coste de un backdrop-filter crece con el radio. */
+  --glass-blur: blur(1.2rem) saturate(140%);
   --glass-shadow: 0 2.4rem 6rem rgba(3, 5, 20, 0.45);
 
   /* ---- Tipografía (fuentes del sistema: sin descargas ni dependencias) ---- */
